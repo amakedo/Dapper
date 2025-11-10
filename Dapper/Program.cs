@@ -17,8 +17,22 @@ namespace Dapper
 
             var student = new Student {Name = "John Doe", Age = 20, Adress = "123 Main St", Email = "test@gmail.com", Year = 2 };
 
-            int rows = db.Execute(sql, student);
-            Console.WriteLine($"{rows} row(s) inserted");
+            //int rows = db.Execute(sql, student);
+            //Console.WriteLine($"{rows} row(s) inserted");
+
+            //string sqlUpdate = "UPDATE Students SET Age = @Age WHERE Id = @Id";
+            //int rows = db.Execute(sqlUpdate, new { Age = 26, Id = 1 });
+            //Console.WriteLine($"{rows} row(s) inserted");
+
+            string sqlDelete = "DELETE FROM Students WHERE Id = @Id";
+            int rows = db.Execute(sqlDelete, new { Id = 1 });
+            Console.WriteLine($"{rows} row(s) deleted");
+
+            var students = db.Query<Student>("SELECT * FROM Students").ToList();
+            foreach (var st in students)
+            {
+                Console.WriteLine($"{st.Id}: {st.Name}, {st.Age}, {st.Adress}, {st.Email}, {st.Year}");
+            }
         }
     }
 }
